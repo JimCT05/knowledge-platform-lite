@@ -1,0 +1,2 @@
+Outlook|Paso 1: Revisa que tu usuario y contraseña sean correctos
+VPN|Paso 1: Comprueba la conexion a internet
