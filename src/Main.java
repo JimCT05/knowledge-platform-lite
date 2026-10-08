@@ -2,28 +2,18 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-
+        // Crear instancia de ArticleManager y Menu
         ArticleManager manager = new ArticleManager();
+        Menu menu = new Menu();
+
+        // Cargar artículos desde el archivo al iniciar la aplicación
         manager.loadArticles();
-
-        // Article article1 = new Article("No arranca mi maquina virtual", "Paso 1: Reinciar MV");
-        // Article article2 = new Article("Fallo al entrar a teletrabajo", "Paso 1: Revisa la conexión a internet\nPaso 2: Revisa conexión a VPN");
-        // manager.addArticle(article1);
-        // manager.addArticle(article2);
-
-        // manager.showArticles();
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
         while (running) {
-            System.out.println("\nKnowledge Platform Lite");
-            System.out.println("1 - Crear artículo");
-            System.out.println("2 - Mostrar artículos");
-            System.out.println("3 - Buscar artículo");
-            System.out.println("4 - Eliminar artículo");
-            System.out.println("5 - Modificar artículo");
-            System.out.println("6 - Guardar");
-            System.out.println("7 - Salir");
+            // Mostrar el menú y obtener la opción del usuario
+            menu.showMenu();
             int option = scanner.nextInt();
             scanner.nextLine();
 
@@ -33,30 +23,30 @@ public class Main {
                     String title = scanner.nextLine();
                     System.out.println("Escribe el contenido del artículo: ");
                     String content = scanner.nextLine();
-                    Article article = new Article(title, content);
-                    manager.addArticle(article);
+                    
+                    manager.addArticle(title, content);
                     break;
                 case 2:
                     System.out.println("---Articulos---");
                     manager.showArticles();
                     break;
                 case 3:
-                    System.out.println("Escribe el título del artículo a buscar: ");
+                    System.out.println("Escribe el ID del artículo a buscar: ");
                     String search = scanner.nextLine();
-                    manager.searchArticle(search);
+                    manager.searchArticle(Integer.parseInt(search));
                     break;
                 case 4:
-                    System.out.println("Escribe el título del artículo a eliminar");
+                    System.out.println("Escribe el ID del artículo a eliminar");
                     String delete = scanner.nextLine();
-                    manager.deleteArticle(delete);
+                    manager.deleteArticle(Integer.parseInt(delete));
                     break;
                 case 5:
-                    System.out.println("Escribe el título del artículo a modificar");
+                    System.out.println("Escribe el ID del artículo a modificar");
                     String modify = scanner.nextLine();
 
-                    Article article1 = manager.findArticleByTitle(modify);
+                    Article foundArticle = manager.findArticleById(Integer.parseInt(modify));
 
-                    if (article1 == null) {
+                    if (foundArticle == null) {
                         System.out.println("No se encontró el artículo");
                         break;
                     }else{
@@ -65,7 +55,7 @@ public class Main {
                         System.out.println("Escribe el contenido del artículo nuevo");
                         String newContent = scanner.nextLine();
 
-                        manager.modifyArticle(article1, newTitle, newContent);
+                        manager.modifyArticle(foundArticle, newTitle, newContent);
                         break;
                     }
                 case 6:

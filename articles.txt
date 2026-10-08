@@ -1,2 +1,3 @@
-Outlook|Paso 1: Revisa que tu usuario y contraseña sean correctos
-VPN|Paso 1: Comprueba la conexion a internet
+1|Outlook|Paso 1: Revisa que tu usuario y contraseña sean correctos
+2|VPN|Paso 1: Comprueba la conexion a internet
+3|No me va el portatil|Paso 1: Revisa que tenga la bateria cargada
