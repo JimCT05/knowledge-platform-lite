@@ -20,10 +20,18 @@ public class Main {
             switch (option) {
                 case 1:
                     System.out.println("Escribe el titulo del artículo: ");
-                    String title = scanner.nextLine();
+                    String title = scanner.nextLine().trim();
+                    if (title.isBlank()) {
+                        System.out.println("No se puede crear un artículo sin título");
+                        break;
+                    }
+
                     System.out.println("Escribe el contenido del artículo: ");
-                    String content = scanner.nextLine();
-                    
+                    String content = scanner.nextLine().trim();
+                    if (content.isBlank()) {
+                        System.out.println("No se puede crear un artículo sin contenido");
+                        break;
+                    }
                     manager.addArticle(title, content);
                     break;
                 case 2:
@@ -33,36 +41,74 @@ public class Main {
                 case 3:
                     System.out.println("Escribe el ID del artículo a buscar: ");
                     String search = scanner.nextLine();
-                    manager.searchArticle(Integer.parseInt(search));
+                    if (search.isBlank()) {
+                        System.out.println("No se puede buscar un artículo sin ID");
+                    } else {
+                        try {
+                            int id = Integer.parseInt(search);
+                            manager.searchArticle(id);
+                        } catch (NumberFormatException e) {
+                            System.out.println("ID inválido. Por favor, introduce un número.");
+                        }
+                    }
                     break;
                 case 4:
                     System.out.println("Escribe el ID del artículo a eliminar");
                     String delete = scanner.nextLine();
-                    manager.deleteArticle(Integer.parseInt(delete));
+                    if (delete.isBlank()) {
+                        System.out.println("No se puede eliminar un artículo sin ID");
+                    } else {
+                        try {
+                            int id = Integer.parseInt(delete);
+                            manager.deleteArticle(id);
+                        } catch (NumberFormatException e) {
+                            System.out.println("ID inválido. Por favor, introduce un número.");
+                        }
+                    }
                     break;
                 case 5:
                     System.out.println("Escribe el ID del artículo a modificar");
                     String modify = scanner.nextLine();
-
-                    Article foundArticle = manager.findArticleById(Integer.parseInt(modify));
+                    if (modify.isBlank()) {
+                        System.out.println("No se puede modificar un artículo sin ID");
+                        break;
+                    }else {
+                        int id;
+                        try{
+                             id = Integer.parseInt(modify);
+                        }catch (NumberFormatException e){
+                            System.out.println("ID inválido. Por favor, introduce un número.");
+                            break;
+                        }
+                        Article foundArticle = manager.findArticleById(id);
 
                     if (foundArticle == null) {
                         System.out.println("No se encontró el artículo");
                         break;
-                    }else{
-                        System.out.println("Escribe el título del artículo nuevo");
-                        String newTitle = scanner.nextLine();
-                        System.out.println("Escribe el contenido del artículo nuevo");
-                        String newContent = scanner.nextLine();
-
-                        manager.modifyArticle(foundArticle, newTitle, newContent);
+                    }
+                    System.out.println("Escribe el título del artículo nuevo");
+                    String newTitle = scanner.nextLine().trim();
+                    if (newTitle.isBlank()) {
+                        System.out.println("No se puede modificar un artículo sin título");
                         break;
+                    }
+                    System.out.println("Escribe el contenido del artículo nuevo");
+                    String newContent = scanner.nextLine().trim();
+                    if (newContent.isBlank()) {
+                        System.out.println("No se puede modificar un artículo sin contenido");
+                        break;
+                    }
+                    manager.modifyArticle(foundArticle, newTitle, newContent);
+                    break;
                     }
                 case 6:
                     manager.saveArticles();
                     break;
                 case 7:
                     running = false;
+                    break;
+                default:
+                    System.out.println("Opción no válida");
                     break;
             }
         }
